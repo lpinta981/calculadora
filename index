@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora PWA</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <iframe src="https://script.google.com/macros/s/AKfycbybbvD0fBPYRjCVpqjoF4tZIRYcKcK-h7HldhhpguK3dVMrz6LsJAA2nUn2lTgc2Sg-/exec" frameborder="0"></iframe>
+
+  <script>
+    let lastCheckTime = new Date().toISOString();
+
+    // Registrar el Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registrado con éxito:', registration);
+      })
+      .catch(error => {
+        console.log('Error al registrar el Service Worker:', error);
+      });
+    }
+
+    // Solicitar permiso para notificaciones
+    function requestNotificationPermission() {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          console.log('Permiso de notificación concedido');
+        }
+      });
+    }
+
+    // Función para verificar nuevas operaciones
+    function checkForNewOperations() {
+      const iframe = document.querySelector('iframe');
+      iframe.contentWindow.postMessage({action: 'getNewOperations', lastCheckTime: lastCheckTime}, '*');
+    }
+
+    // Escuchar mensajes del iframe
+    window.addEventListener('message', event => {
+      if (event.data.action === 'newOperations') {
+        const newOperations = event.data.operations;
+        if (newOperations.length > 0) {
+          showNotification(newOperations[newOperations.length - 1]);
+        }
+        lastCheckTime = new Date().toISOString();
+      }
+    });
+
+    // Mostrar notificación
+    function showNotification(operation) {
+      if (Notification.permission === 'granted') {
+        const notification = new Notification('Nueva operación', {
+          body: `${operation.operation} = ${operation.result}`,
+          icon: 'https://cdn.pixabay.com/photo/2022/05/08/03/10/calculator-7181192_960_720.png'
+        });
+      }
+    }
+
+    // Iniciar
+    requestNotificationPermission();
+    setInterval(checkForNewOperations, 10000); // Verificar cada 10 segundos
+  </script>
+</body>
+</html>
