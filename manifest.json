@@ -2,7 +2,7 @@
   "name": "Calculadora PWA",
   "short_name": "Calc PWA",
   "description": "Una calculadora PWA con notificaciones",
-  "start_url": "/",
+  "start_url": "/calculadora/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4285f4",
