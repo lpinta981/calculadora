@@ -1,8 +1,8 @@
 const CACHE_NAME = 'calculator-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  '/calculadora/',
+  '/calculadora/index.html',
+  '/calculadora/manifest.json',
   'https://cdn.pixabay.com/photo/2022/05/08/03/10/calculator-7181192_960_720.png'
 ];
 
