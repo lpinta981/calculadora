@@ -1,0 +1,16 @@
+{
+  "name": "Calculadora PWA",
+  "short_name": "Calc PWA",
+  "description": "Una calculadora PWA con notificaciones",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4285f4",
+  "icons": [
+    {
+      "src": "https://cdn.pixabay.com/photo/2022/05/08/03/10/calculator-7181192_960_720.png",
+      "sizes": "960x720",
+      "type": "image/png"
+    }
+  ]
+}
